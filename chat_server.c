@@ -13,7 +13,7 @@
 #include <sys/socket.h>
 #include <pthread.h>
 
-#define PORT 8080
+#define PORT 12345
 
 //CAMBIAR PARA AÑADIR MAS CLIENTES
 #define MAX_CLIENTS 3

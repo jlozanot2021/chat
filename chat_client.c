@@ -13,6 +13,8 @@
 #include <signal.h>
 #include <errno.h>
 #include <pthread.h>
+#include <arpa/inet.h>
+
 
 #define MAX_BUFFER 1024
 #define PORT 8080
@@ -65,10 +67,31 @@ int main(int argc, char **argv) {
 	char buffer[MAX_BUFFER];
 	pthread_t thread;
 
-	my_addr.sin_family = AF_INET;
-	my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	my_addr.sin_port = htons(PORT);
+	int opt, port;
+	char *ip = NULL;
 
+    while ((opt = getopt(argc, argv, "")) != -1) {
+        switch (opt) {
+			default: /* '?' */
+			    fprintf(stderr, "Unrecognized option: %c\n", opt);
+				fprintf(stderr, "Usage: %s [id] [ip] [port]\n",
+						argv[0]);
+				exit(EXIT_FAILURE);
+        }
+    }
+	
+    if (2 + optind >= argc) {
+        fprintf(stderr, "Usage: %s [id] [ip] [port]\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    ip = argv[optind];
+    port = atoi(argv[optind + 1]);
+    
+    my_addr.sin_family = AF_INET;
+	my_addr.sin_addr.s_addr = inet_addr(ip);
+	my_addr.sin_port = htons(port);
+	
 	tcp_socket = socket(AF_INET, SOCK_STREAM, 0);
 	if (tcp_socket < 0) {
 		fprintf(stderr, "Error in socket creation\n");

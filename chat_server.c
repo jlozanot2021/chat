@@ -73,7 +73,7 @@ void *thread_client(void *thread) {
 }
 
 
-int main() {
+int main(int argc, char **argv) {
     setbuf(stdout, NULL);
     int serverSocket, clientSockets[MAX_CLIENTS];
     struct sockaddr_in serverAddr, clientAddr;
@@ -92,7 +92,7 @@ int main() {
     }
 
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(PORT);
+    serverAddr.sin_port = htons(atoi(argv[1]));
     serverAddr.sin_addr.s_addr = INADDR_ANY;
 
     if (setsockopt

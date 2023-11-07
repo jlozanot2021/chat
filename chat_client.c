@@ -74,14 +74,14 @@ int main(int argc, char **argv) {
         switch (opt) {
 			default: /* '?' */
 			    fprintf(stderr, "Unrecognized option: %c\n", opt);
-				fprintf(stderr, "Usage: %s [id] [ip] [port]\n",
+				fprintf(stderr, "Usage: %s [ip] [port]\n",
 						argv[0]);
 				exit(EXIT_FAILURE);
         }
     }
 	
-    if (2 + optind >= argc) {
-        fprintf(stderr, "Usage: %s [id] [ip] [port]\n", argv[0]);
+    if (1 + optind >= argc) {
+        fprintf(stderr, "Usage: %s [ip] [port]\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
